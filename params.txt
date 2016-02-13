@@ -1,0 +1,2 @@
+./a1 b input/alphabet.txt output/alphabet_out.txt keyfiles/keyalphabet.txt e
+./a1 b output/alphabet_out.txt output2/alphabet_out_2.txt keyfiles/keyalphabet.txt d
