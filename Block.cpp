@@ -13,7 +13,7 @@ bool Block::xor_encrypt() {
 bool Block::xor_decrypt() {
     if (!swap()) {cerr << "Error: Problem Unswapping" << endl; return false;}
     for (int i = 0; i < blocks_count; i++) {
-        for (int j = 0; j < blocks[i].size(); j++) {
+        for (int j = 0; j < (unsigned int) blocks[i].size(); j++) {
             blocks[i][j] = (blocks[i][j] ^ key[j]);
         }
     }
