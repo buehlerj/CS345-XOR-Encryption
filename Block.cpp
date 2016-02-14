@@ -1,23 +1,23 @@
 #include "Block.h"
 
 bool Block::xor_encrypt() {
-    for (int i = 0; i < blocks_count; i++) {
-        for (int j = 0; j < blocks[i].size(); j++) {
-            blocks[i][j] = blocks[i][j] ^ key[j];
-        }
-    }
+    // for (int i = 0; i < blocks_count; i++) {
+    //     for (int j = 0; j < (int) blocks[i].size(); j++) {
+    //         blocks[i][j] = blocks[i][j] ^ key[j];
+    //     }
+    // }
     if (!swap()) {cerr << "Error: Problem Swapping" << endl; return false;}
     return true;
 }
 
 bool Block::xor_decrypt() {
     if (!swap()) {cerr << "Error: Problem Unswapping" << endl; return false;}
-    for (int i = 0; i < blocks_count; i++) {
-        for (int j = 0; j < (unsigned int) blocks[i].size(); j++) {
-            blocks[i][j] = (blocks[i][j] ^ key[j]);
-        }
-    }
-    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
+    // for (int i = 0; i < blocks_count; i++) {
+    //     for (int j = 0; j < (int) blocks[i].size(); j++) {
+    //         blocks[i][j] = (blocks[i][j] ^ key[j]);
+    //     }
+    // }
+    //if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
     return true;
 }
 
@@ -26,10 +26,10 @@ bool Block::read_input_file(istream& input_file) {
     string current_block;
     while (!input_file.eof()) {
         for (int i = 0; i < 8; i++) {
-            char current = (char) input_file.get();
+            char current = input_file.get();
             if (input_file.fail()) {
                 char_count--;
-                current_block += (current >> 8);
+                current_block += (unsigned char) (0x80);
             }
             else current_block += current;
             char_count++;
@@ -44,17 +44,20 @@ bool Block::read_input_file(istream& input_file) {
 
 bool Block::read_keyfile(istream& keyfile) {
     for (int i = 0; i < 8; i++) {
-        key += (char) keyfile.get();
+        key += (unsigned char) keyfile.get();
         if (keyfile.fail()) {cerr << "Error: Problem reading from the keyfile" << endl; return false;}
     }
     return true;
 }
 
-bool Block::write_output(ostream& file) {
-    file << to_string_padded();
-    if (file.fail()) {
-        cerr << "Error: Could not print to file" << endl;
-        return false;
+bool Block::write_output(ostream& file, bool decrypt) {
+    for (int i = 0; i < blocks_count; i++) {
+        if (decrypt && i == blocks_count - 1) {
+            file << blocks[i].substr(0, pad_size);
+            if (file.fail()) {cerr << "Error: Could not print to file" << endl; return false;}
+        }
+        else file << blocks[i];
+        if (file.fail()) {cerr << "Error: Could not print to file" << endl; return false;}
     }
     return true;
 }
@@ -65,9 +68,10 @@ bool Block::write_output(ostream& file) {
 
 bool Block::swap() {
     string text = to_string_padded();
+    cout << text << endl;
     int end = 8 * blocks_count - 1;
     for (int i = 0; i < 8 * blocks_count; i++) {
-        if (i == end) break;
+        if (i >= end) break;
         char current_key = key[i % 8];
         if ((int)current_key % 2 == 1) {
             char temp = text[i];
