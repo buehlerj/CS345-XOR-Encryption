@@ -24,7 +24,7 @@ public:
 
     bool read_input_file(istream& input_file);
     bool read_keyfile(istream& keyfile);
-    bool write_output(ostream& file);
+    bool write_output(ostream& output_file);
 
 private:
     string text;

@@ -16,7 +16,7 @@ bool Stream::xor_decrypt() {
 
 
 
-bool Stream::read_input_file(istream &input_file) {
+bool Stream::read_input_file(istream& input_file) {
     while (!input_file.eof()) {
         char current = (char) input_file.get();
         if (input_file.fail())
@@ -36,6 +36,9 @@ bool Stream::read_keyfile(istream& keyfile) {
     return true;
 }
 
-bool Stream::write_output(ostream& file) {
+bool Stream::write_output(ostream& output_file) {
+    for (int i = 0; i < text.size(); i++) {
+        output_file << text[i];
+    }
     return true;
 }
