@@ -104,7 +104,6 @@ int main(int argc, char*argv[]) {
             stream.xor_decrypt(); // Decrypt
         if (!stream.write_output(output_file)) {cerr << "Error: Problem writing output file" << endl; return -1;}
     }
-
-    cout << "\n\nExit successfully" << endl;
+    
     return 0;
 }
