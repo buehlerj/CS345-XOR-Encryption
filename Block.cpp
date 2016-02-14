@@ -1,44 +1,52 @@
 #include "Block.h"
 
 bool Block::xor_encrypt() {
-     for (int i = 0; i < blocks_count; i++) {
-         for (int j = 0; j < (int) blocks[i].size(); j++) {
-             blocks[i][j] = blocks[i][j] ^ key[j];
-         }
-     }
+//     for (int i = 0; i < blocks_count; i++) {
+//         for (int j = 0; j < (int) blocks[i].size(); j++) {
+//             blocks[i][j] = blocks[i][j] ^ key[j];
+//         }
+//     }
     if (!swap()) {cerr << "Error: Problem Swapping" << endl; return false;}
     return true;
 }
 
 bool Block::xor_decrypt() {
     if (!swap()) {cerr << "Error: Problem Unswapping" << endl; return false;}
-     for (int i = 0; i < blocks_count; i++) {
-         for (int j = 0; j < (int) blocks[i].size(); j++) {
-             blocks[i][j] = (blocks[i][j] ^ key[j]);
-         }
-     }
-    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
+//     for (int i = 0; i < blocks_count; i++) {
+//         for (int j = 0; j < (int) blocks[i].size(); j++) {
+//             blocks[i][j] = (blocks[i][j] ^ key[j]);
+//         }
+//     }
+//    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
     return true;
 }
 
 
-bool Block::read_input_file(istream& input_file) {
-    string current_block;
+
+bool Block::read_input_file(istream &input_file) {
+    string current_block = "";
     while (!input_file.eof()) {
         for (int i = 0; i < 8; i++) {
             char current = input_file.get();
-            if (input_file.fail()) {
-                char_count--;
+            if (input_file.fail() && i == 0) {
+                break;
+            }
+            else if (input_file.fail()) {
                 current_block += (unsigned char) (0x80);
             }
-            else current_block += current;
-            char_count++;
+            else {
+                current_block += current;
+                char_count++;
+            }
+            if (i == 7) {
+                blocks.insert(blocks.begin() + blocks_count, current_block);
+                blocks_count++;
+                current_block = "";
+            }
         }
-        blocks.insert(blocks.begin() + blocks_count, current_block);
-        blocks_count++;
-        current_block = "";
     }
     pad_size = 8 - (char_count % 8);
+    if (pad_size == 8) pad_size = 0;
     return true;
 }
 

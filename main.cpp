@@ -82,11 +82,14 @@ int main(int argc, char*argv[]) {
         if (!block.read_input_file(input_file)) {cerr << "Error: Problem reading the input file" << endl; return -1;}
         if (!block.read_keyfile(keyfile)) {cerr << "Error: Problem reading the keyfile" << endl; return -1;}
         if (mode_of_operation == 'e') {
+            cout << block.to_string_padded() << endl;
             block.xor_encrypt(); // Encrypt
             if (!block.write_output(output_file, false)) {cerr << "Error: Problem writing the output file" << endl; return -1;}
         }
         else {
+//            cout << block.to_string_padded() << endl;
             block.xor_decrypt(); // Decrypt
+//            cout << block.to_string_padded() << endl;
             if (!block.write_output(output_file, true)) {cerr << "Error: Problem writing the output file" << endl; return -1;}
 
         }
