@@ -1,23 +1,23 @@
 #include "Block.h"
 
 bool Block::xor_encrypt() {
-//     for (int i = 0; i < blocks_count; i++) {
-//         for (int j = 0; j < (int) blocks[i].size(); j++) {
-//             blocks[i][j] = blocks[i][j] ^ key[j];
-//         }
-//     }
+     for (int i = 0; i < blocks_count; i++) {
+         for (int j = 0; j < (int) blocks[i].size(); j++) {
+             blocks[i][j] = blocks[i][j] ^ key[j];
+         }
+     }
     if (!swap()) {cerr << "Error: Problem Swapping" << endl; return false;}
     return true;
 }
 
 bool Block::xor_decrypt() {
     if (!swap()) {cerr << "Error: Problem Unswapping" << endl; return false;}
-//     for (int i = 0; i < blocks_count; i++) {
-//         for (int j = 0; j < (int) blocks[i].size(); j++) {
-//             blocks[i][j] = (blocks[i][j] ^ key[j]);
-//         }
-//     }
-//    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
+     for (int i = 0; i < blocks_count; i++) {
+         for (int j = 0; j < (int) blocks[i].size(); j++) {
+             blocks[i][j] = (blocks[i][j] ^ key[j]);
+         }
+     }
+    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
     return true;
 }
 
