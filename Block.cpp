@@ -94,8 +94,11 @@ bool Block::swap() {
 }
 
 bool Block::unpad() {
+    for (int i = 0; i < 8; i++) {
+        if ((int) blocks[blocks_count - 1][i] == -128)
+            pad_size++;
+    }
     blocks[blocks_count - 1] = blocks[blocks_count - 1].substr(0, pad_size);
-    cout << blocks[blocks_count - 1].size() << endl;
     return true;
 }
 
