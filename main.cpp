@@ -84,7 +84,6 @@ int main(int argc, char*argv[]) {
         if (mode_of_operation == 'e') {
             block.xor_encrypt(); // Encrypt
             if (!block.write_output(output_file, false)) {cerr << "Error: Problem writing the output file" << endl; return -1;}
-
         }
         else {
             block.xor_decrypt(); // Decrypt

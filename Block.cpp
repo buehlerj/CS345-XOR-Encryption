@@ -1,23 +1,23 @@
 #include "Block.h"
 
 bool Block::xor_encrypt() {
-    // for (int i = 0; i < blocks_count; i++) {
-    //     for (int j = 0; j < (int) blocks[i].size(); j++) {
-    //         blocks[i][j] = blocks[i][j] ^ key[j];
-    //     }
-    // }
+     for (int i = 0; i < blocks_count; i++) {
+         for (int j = 0; j < (int) blocks[i].size(); j++) {
+             blocks[i][j] = blocks[i][j] ^ key[j];
+         }
+     }
     if (!swap()) {cerr << "Error: Problem Swapping" << endl; return false;}
     return true;
 }
 
 bool Block::xor_decrypt() {
     if (!swap()) {cerr << "Error: Problem Unswapping" << endl; return false;}
-    // for (int i = 0; i < blocks_count; i++) {
-    //     for (int j = 0; j < (int) blocks[i].size(); j++) {
-    //         blocks[i][j] = (blocks[i][j] ^ key[j]);
-    //     }
-    // }
-    //if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
+     for (int i = 0; i < blocks_count; i++) {
+         for (int j = 0; j < (int) blocks[i].size(); j++) {
+             blocks[i][j] = (blocks[i][j] ^ key[j]);
+         }
+     }
+    if (!unpad()) {cerr << "Error: Problem unpadding" << endl; return false;}
     return true;
 }
 
@@ -68,15 +68,14 @@ bool Block::write_output(ostream& file, bool decrypt) {
 
 bool Block::swap() {
     string text = to_string_padded();
-    cout << text << endl;
     int end = 8 * blocks_count - 1;
     for (int i = 0; i < 8 * blocks_count; i++) {
         if (i >= end) break;
         char current_key = key[i % 8];
         if ((int)current_key % 2 == 1) {
             char temp = text[i];
-            text[end] = text[i];
-            text[i] = temp;
+            text[i] = text[end];
+            text[end] = temp;
             end--;
         }
     }
@@ -87,7 +86,6 @@ bool Block::swap() {
 }
 
 bool Block::unpad() {
-    cout << blocks[blocks_count - 1].size() << endl;
     blocks[blocks_count - 1] = blocks[blocks_count - 1].substr(0, pad_size);
     cout << blocks[blocks_count - 1].size() << endl;
     return true;
