@@ -27,6 +27,9 @@ public:
     bool write_output(ostream& file);
 
 private:
+    string text;
+    string key;
+
 };
 
 

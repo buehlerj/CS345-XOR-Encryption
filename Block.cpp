@@ -27,7 +27,7 @@ bool Block::read_input_file(istream &input_file) {
     string current_block = "";
     while (!input_file.eof()) {
         for (int i = 0; i < 8; i++) {
-            char current = input_file.get();
+            char current = (char) input_file.get();
             if (input_file.fail() && i == 0) {
                 break;
             }

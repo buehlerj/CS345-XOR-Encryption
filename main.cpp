@@ -20,6 +20,9 @@ using std::string;
 // b D:\jeffs\Documents\test_input\alphabet1.txt D:\jeffs\Documents\test_output\alphabet1_out.txt D:\jeffs\Documents\test_input\keyalphabet1.txt e
 // b D:\jeffs\Documents\test_output\alphabet1_out.txt D:\jeffs\Documents\test_output_2\alphabet1_out_out.txt D:\jeffs\Documents\test_input\keyalphabet1.txt d
 
+// Test Stream
+// s D:\jeffs\Documents\test_input\alphabet1.txt D:\jeffs\Documents\test_output\alphabet1_out.txt D:\jeffs\Documents\test_input\keyalphabet1.txt e
+// s D:\jeffs\Documents\test_output\alphabet1_out.txt D:\jeffs\Documents\test_output_2\alphabet1_out_out.txt D:\jeffs\Documents\test_input\keyalphabet1.txt d
 void test() {
 
 }
@@ -93,13 +96,13 @@ int main(int argc, char*argv[]) {
     }
     else { // Stream Cipher
         Stream stream;
-        if (!stream.read_input_file(input_file)) {}
-        if (!stream.read_keyfile(keyfile)) {}
+        if (!stream.read_input_file(input_file)) {cerr << "Error: Problem reading input file" << endl; return -1;}
+        if (!stream.read_keyfile(keyfile)) {cerr << "Error: Problem reading keyfile" << endl; return -1;}
         if (mode_of_operation == 'e')
             stream.xor_encrypt(); // Encrypt
         else
             stream.xor_decrypt(); // Decrypt
-        if (!stream.write_output(output_file)) {}
+        if (!stream.write_output(output_file)) {cerr << "Error: Problem writing output file" << endl; return -1;}
     }
 
     cout << "\n\nExit successfully" << endl;
