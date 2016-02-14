@@ -1,14 +1,14 @@
 #include "Stream.h"
 
 bool Stream::xor_encrypt() {
-    for (int i = 0; i < text.size(); i++) {
+    for (int i = 0; i < (int) text.size(); i++) {
         key[i] = text[i] ^ key[i % key.size()];
     }
     return true;
 }
 
 bool Stream::xor_decrypt() {
-    for (int i = 0; i < text.size(); i++) {
+    for (int i = 0; i < (int) text.size(); i++) {
         key[i] = text[i] ^ key[i % key.size()];
     }
     return true;
@@ -37,7 +37,7 @@ bool Stream::read_keyfile(istream& keyfile) {
 }
 
 bool Stream::write_output(ostream& output_file) {
-    for (int i = 0; i < text.size(); i++) {
+    for (int i = 0; i < (int) text.size(); i++) {
         output_file << text[i];
     }
     return true;
