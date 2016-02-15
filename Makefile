@@ -14,4 +14,4 @@ Stream.o: Stream.h Stream.cpp
 clean:
 	-rm -f a1 *.o *.gch *.txt~
 tar:
-	tar -cf A1.tar *.cpp *.h Makefile
+	tar -cf A1.tar *.cpp *.h *.txt Makefile
